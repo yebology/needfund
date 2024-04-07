@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { connectWallet } from "../services/Blockchain";
-import { truncate, useGlobalState } from "../backend";
+import { connectWallet } from "../services/Blockchain.jsx";
+import { truncate, useGlobalState } from "../backend/index.jsx";
 
 const Header = () => {
   const [connectedAccount] = useGlobalState('connectedAccount')

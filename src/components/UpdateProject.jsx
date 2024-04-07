@@ -1,6 +1,6 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
-import { useGlobalState, setGlobalState } from "../backend/index.js";
+import { useGlobalState, setGlobalState } from "../backend/index.jsx";
 
 const UpdateProject = () => {
   const [updateScale] = useGlobalState("updateScale");

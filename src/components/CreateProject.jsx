@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
-import { useGlobalState, setGlobalState } from "../backend/index.js";
-import { createProject } from "../services/Blockchain.js";
+import { useGlobalState, setGlobalState } from "../backend/index.jsx";
+import { createProject } from "../services/Blockchain.jsx";
 import { toast } from "react-toastify";
 
 const CreateProject = () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { setGlobalState } from "../backend/index.js"
+import { setGlobalState } from "../backend/index.jsx"
 
 const Hero = () => {
   return (
