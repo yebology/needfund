@@ -1,3 +1,5 @@
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const fs = require("fs");
 
 async function main() {
@@ -7,7 +9,7 @@ async function main() {
   JSON.stringify({ address: contract.address }, null, 4);
   fs.writeFile(
     "./src/artifacts/contractAddress.json",
-    address,
+    contract.target,
     "utf8",
     (err) => {
       if (err) {
