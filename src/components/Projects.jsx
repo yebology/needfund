@@ -35,7 +35,7 @@ const ProjectCard = ({ project, id }) => (
             />
             <small className="text-gray-700">0x15...1ea2</small>
           </div>
-          <small className="text-gray-500">2 days left</small>
+          <small className="text-gray-500 mb-2">2 days left</small>
         </div>
         <div className="w-full bg-gray-300">
           <div

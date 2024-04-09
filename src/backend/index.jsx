@@ -7,6 +7,8 @@ const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
     investScale: 'scale-0',
     deleteScale: 'scale-0',
     connectedAccount: '',
+    projects: [],
+    stats: null
 })
 
 const truncate = (text, startChar, endChar, maxLength) => {

@@ -15,24 +15,41 @@ const CreateProject = () => {
 
   const toTimeStamp = (dateStr) => {
     const date = Date.parse(dateStr);
-    return date / 1000
-  }
+    return date / 1000;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!title || !description || !imageURL || !amount || !date) return;
 
     const parameter = {
       title,
       description,
-      amount,
-      expiredAt : toTimeStamp(date) ,
       imageURL,
+      cost: amount,
+      expiredAt: toTimeStamp(date),
     };
     console.log(parameter);
 
     await createProject(parameter);
-    toast.success("Sucessfully created project")
+    console.log("b");
+    toast.success("Project created successfully!");
+    console.log("a");
+    onClose();
+  };
+
+  const onClose = () => {
+    setGlobalState("createScale", "scale-0");
+    reset();
+  };
+
+  const reset = () => {
+    setTitle("");
+    setDescription("");
+    setImageURL("");
+    setAmount("");
+    setDate("");
   };
 
   return (
@@ -40,13 +57,13 @@ const CreateProject = () => {
       className={`fixed flex items-center justify-center w-screen h-screen inset-0 bg-black bg-opacity-50 transform transition-transform duration-300 ${createScale}`}
     >
       <div className="bg-white shadow-xl shadow-black rounded-xl w-11/12 md:w-2/5 h-7/12 p-6">
-        <form className="flex flex-col" onSubmit={handleSubmit}>
+        <form className="flex flex-col" onSubmit={handleSubmit} method="POST">
           <div className="flex justify-between items-center">
             <p className="font-semibold">Create Project</p>
             <button
               type="button"
               className="border-0 bg-transparent focus:outline-none"
-              onClick={() => setGlobalState("createScale", "scale-0")}
+              onClick={onClose}
             >
               <FaTimes />
             </button>
@@ -55,7 +72,8 @@ const CreateProject = () => {
             <div className="rounded-xl overflow-hidden w-20 h-20">
               <img
                 src={
-                  imageURL || "https://www.hdwallpapers.in/download/cell_biology_background_hd_wallpaper_cellular-HD.jpg"
+                  imageURL ||
+                  "https://www.hdwallpapers.in/download/cell_biology_background_hd_wallpaper_cellular-HD.jpg"
                 }
                 alt="title"
                 className="h-full w-full object-cover cursor-pointer"
@@ -124,7 +142,7 @@ const CreateProject = () => {
             className="inline-block px-6 py-2.5 mt-5 text-white font-medium rounded-full shadow-md bg-indigo-600 hover:bg-indigo-700"
           >
             {" "}
-            Invest Project{" "}
+            Add Project{" "}
           </button>
         </form>
       </div>
