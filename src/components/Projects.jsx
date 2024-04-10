@@ -6,9 +6,12 @@ import { truncate, useGlobalState } from "../backend";
 
 const Projects = () => {
   const [projects] = useGlobalState("projects");
+  const [connectedAccount] = useGlobalState("connectedAccount");
   useEffect(() => {
-    loadProjects();
-  });
+    if (connectedAccount) {
+      loadProjects();
+    }
+  }, []);
   return (
     <div className="flex flex-col px-6 mb-7">
       <div className="flex justify-center items-center flex-wrap">

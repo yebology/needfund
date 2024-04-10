@@ -8,7 +8,7 @@ const Hero = () => {
     loadProjects();
   }, []);
   return (
-    <div className="text-center bg-white py-24 px-6 text-gray-800">
+    <div className="text-center bg-white py-36 px-6 text-gray-800">
       <h1 className="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12">
         <span>Fueling Web3 Dreams Together With</span>
         <br />

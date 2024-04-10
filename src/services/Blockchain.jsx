@@ -1,6 +1,10 @@
 import address from "../artifacts/contractAddress.json";
 import abi from "../artifacts/src/contracts/NeedFund.sol/NeedFund.json";
-import { getGlobalState, setGlobalState } from "../backend/index.jsx";
+import {
+  getGlobalState,
+  setGlobalState,
+  useGlobalState,
+} from "../backend/index.jsx";
 import { ethers } from "ethers";
 import { Utils } from "alchemy-sdk";
 
@@ -17,10 +21,18 @@ const connectWallet = async () => {
       method: "eth_requestAccounts",
     });
     setGlobalState("connectedAccount", accounts[0]?.toLowerCase());
+    localStorage.setItem("connectedAccount", accounts[0]?.toLowerCase());
+    window.location.href = "/home";
+  } catch (error) {
+    reportError(error);
+  }
+};
 
-    if (accounts[0]) {
-      localStorage.setItem("connectedAccount", accounts[0]?.toLowerCase());
-    }
+const disconnectWallet = async () => {
+  try {
+    if (!ethereum) return alert("Please install Metamask");
+    setGlobalState("connectedAccount", "");
+    localStorage.removeItem("connectedAccount");
   } catch (error) {
     reportError(error);
   }
@@ -83,7 +95,6 @@ const loadProjects = async () => {
     const projects = await contract.getProjects();
     console.log(projects);
     structuredProjects(projects);
-    await loadProjects();
     console.log("d");
   } catch (error) {
     reportError(error);
@@ -106,10 +117,8 @@ const structuredProjects = async (projects) => {
     status: project.status,
   }));
   setGlobalState("projects", arrOfProject);
-  console.log("ha : " + Array.isArray(arrOfProject));
   localStorage.setItem("projects", arrOfProject);
-  console.log("hw " + localStorage.getItem("projects"));  
-  console.log(Array.isArray(arrOfProject) + "hohoho");
+  console.log("heee " + localStorage.getItem("projects"));
 };
 
 // const isWalletConnected = async () => {
@@ -145,4 +154,4 @@ const reportError = (error) => {
   throw new Error("No ethereum object.");
 };
 
-export { connectWallet, createProject, loadProjects };
+export { connectWallet, createProject, loadProjects, disconnectWallet };

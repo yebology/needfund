@@ -1,10 +1,22 @@
 import Hero from "../components/Hero.jsx";
 import Projects from "../components/Projects.jsx";
-import CreateProject from "../components/CreateProject.jsx"
+import Header from "../components/Header.jsx";
+import CreateProject from "../components/CreateProject.jsx";
+import { useGlobalState } from "../backend/index.jsx";
+import { useEffect } from "react";
 
 const Home = () => {
+  const [connectedAccount, setConnectedAccount] =
+    useGlobalState("connectedAccount");
+  useEffect(() => {
+    const account = localStorage.getItem("connectedAccount");
+    if (account) {
+      setConnectedAccount(account);
+    }
+  }, []);
   return (
     <>
+      <Header />
       <Hero />
       <Projects />
       <div className="flex justify-center items-center my-5">
