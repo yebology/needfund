@@ -27,13 +27,19 @@ const connectWallet = async () => {
 };
 
 const getEthereumContract = async () => {
-  const connectedAccount = getGlobalState("connectedAccount");
+  const connectedAccount = localStorage.getItem("connectedAccount");
+  console.log("c");
   if (connectedAccount) {
+    console.log("d");
     const provider = new ethers.BrowserProvider(ethereum);
+    console.log("e");
     const signer = await provider.getSigner();
+    console.log("f");
     const contract = new ethers.Contract(contractAddress, contractAbi, signer);
+    console.log("g");
     return contract;
   } else {
+    console.log("h");
     return getGlobalState("contract");
   }
 };
@@ -71,13 +77,39 @@ const createProject = async ({
 const loadProjects = async () => {
   try {
     if (!ethereum) return alert("Please install Metamask");
+    console.log("a");
     const contract = await getEthereumContract();
+    console.log("b");
     const projects = await contract.getProjects();
-    // const stats = await contract.stats();
-    // setGlobalState('projects', structuredProjects(projects));
+    console.log(projects);
+    structuredProjects(projects);
+    await loadProjects();
+    console.log("d");
   } catch (error) {
     reportError(error);
   }
+};
+
+const structuredProjects = async (projects) => {
+  const arrOfProject = projects.map((project) => ({
+    index: parseInt(project.index),
+    owner: project.owner.toLowerCase(),
+    projectTitle: project.projectTitle,
+    projectDescription: project.projectDescription,
+    projectImageURL: project.projectImageURL,
+    cost: parseInt(project.cost._hex) / 10 ** 18,
+    raised: parseInt(project.raised._hex) / 10 ** 18,
+    totalRaisedSoFar: parseInt(project.totalRaisedSoFar._hex) / 10 ** 18,
+    timestamp: new Date(parseInt(project.timestamp)).getTime(),
+    expiredAt: new Date(parseInt(project.expiredAt)).getTime(),
+    backers: parseInt(project.backers),
+    status: project.status,
+  }));
+  setGlobalState("projects", arrOfProject);
+  console.log("ha : " + Array.isArray(arrOfProject));
+  localStorage.setItem("projects", arrOfProject);
+  console.log("hw " + localStorage.getItem("projects"));  
+  console.log(Array.isArray(arrOfProject) + "hohoho");
 };
 
 // const isWalletConnected = async () => {
@@ -113,4 +145,4 @@ const reportError = (error) => {
   throw new Error("No ethereum object.");
 };
 
-export { connectWallet, createProject };
+export { connectWallet, createProject, loadProjects };

@@ -1,7 +1,6 @@
-import React from "react";
 import Hero from "../components/Hero.jsx";
 import Projects from "../components/Projects.jsx";
-import CreateProject from "../components/CreateProject.jsx";
+import CreateProject from "../components/CreateProject.jsx"
 
 const Home = () => {
   return (
@@ -17,7 +16,7 @@ const Home = () => {
           Load More{" "}
         </button>
       </div>
-      <CreateProject/>
+      <CreateProject />
     </>
   );
 };
