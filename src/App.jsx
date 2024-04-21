@@ -7,7 +7,6 @@ import Project from "./views/Project.jsx";
 import { Route, Routes } from "react-router-dom";
 // import { isWalletConnected } from "./services/Blockchain.jsx";
 import { ToastContainer } from "react-toastify";
-import { useGlobalState } from "./backend/index.jsx";
 
 function App() {
   return (

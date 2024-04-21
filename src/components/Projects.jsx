@@ -4,14 +4,7 @@ import Identicons from "react-identicons";
 import { loadProjects } from "../services/Blockchain";
 import { truncate, useGlobalState } from "../backend";
 
-const Projects = () => {
-  const [projects] = useGlobalState("projects");
-  const [connectedAccount] = useGlobalState("connectedAccount");
-  useEffect(() => {
-    if (connectedAccount) {
-      loadProjects();
-    }
-  }, []);
+const Projects = ({projects}) => {
   return (
     <div className="flex flex-col px-6 mb-7">
       <div className="flex justify-center items-center flex-wrap">

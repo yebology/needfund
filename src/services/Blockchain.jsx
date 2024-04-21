@@ -17,12 +17,14 @@ const connectWallet = async () => {
     if (!ethereum) {
       return alert("Please install Metamask");
     }
+    await ethereum.enable();
     const accounts = await ethereum.request({
       method: "eth_requestAccounts",
     });
     setGlobalState("connectedAccount", accounts[0]?.toLowerCase());
     localStorage.setItem("connectedAccount", accounts[0]?.toLowerCase());
-    window.location.href = "/home";
+    await getAndUseEthereumContract();
+    // window.location.href = "/home";
   } catch (error) {
     reportError(error);
   }
@@ -38,21 +40,33 @@ const disconnectWallet = async () => {
   }
 };
 
+const getAndUseEthereumContract = async () => {
+  try {
+    if (!ethereum) return alert("Please install Metamask.");
+    const contract = await getEthereumContract();
+    localStorage.setItem("ethereumContract", contract);
+    console.log(localStorage.getItem("ethereumContract") + " hhhhh");
+  } catch (error) {
+    reportError(error);
+  }
+};
+
 const getEthereumContract = async () => {
-  const connectedAccount = localStorage.getItem("connectedAccount");
-  console.log("c");
-  if (connectedAccount) {
+  try {
+    if (!ethereum) return alert("Please install Metamask.");
+    // const [connectedAccount] = useGlobalState("connectedAccount");
+    // console.log(connectedAccount);
     console.log("d");
     const provider = new ethers.BrowserProvider(ethereum);
+    // await ethereum.enable();
     console.log("e");
     const signer = await provider.getSigner();
     console.log("f");
     const contract = new ethers.Contract(contractAddress, contractAbi, signer);
     console.log("g");
     return contract;
-  } else {
-    console.log("h");
-    return getGlobalState("contract");
+  } catch (error) {
+    reportError(error);
   }
 };
 
@@ -90,7 +104,8 @@ const loadProjects = async () => {
   try {
     if (!ethereum) return alert("Please install Metamask");
     console.log("a");
-    const contract = await getEthereumContract();
+    const contract = localStorage.getItem("ethereumContract");
+    console.log(contract);
     console.log("b");
     const projects = await contract.getProjects();
     console.log(projects);

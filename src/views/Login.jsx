@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { connectWallet } from "../services/Blockchain";
-import { useGlobalState } from "../backend";
 
 const Login = () => {
   return (

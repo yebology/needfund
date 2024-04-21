@@ -4,21 +4,25 @@ import Header from "../components/Header.jsx";
 import CreateProject from "../components/CreateProject.jsx";
 import { useGlobalState } from "../backend/index.jsx";
 import { useEffect } from "react";
+import { loadProjects } from "../services/Blockchain.jsx";
 
 const Home = () => {
-  const [connectedAccount, setConnectedAccount] =
-    useGlobalState("connectedAccount");
+  const [projects] = useGlobalState("projects");
+  const [connectedAccount] = useGlobalState("connectedAccount");
   useEffect(() => {
-    const account = localStorage.getItem("connectedAccount");
-    if (account) {
-      setConnectedAccount(account);
+    console.log("hehe");
+    console.log(connectedAccount);
+    console.log(localStorage.getItem("connectedAccount"));
+    if (localStorage.getItem("connectedAccount") !== null) {
+      console.log("haha");
+      loadProjects();
     }
   }, []);
   return (
     <>
       <Header />
       <Hero />
-      <Projects />
+      <Projects projects={projects} />
       <div className="flex justify-center items-center my-5">
         <button
           type="button"
