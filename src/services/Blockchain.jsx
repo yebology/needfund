@@ -24,7 +24,7 @@ const connectWallet = async () => {
     setGlobalState("connectedAccount", accounts[0]?.toLowerCase());
     localStorage.setItem("connectedAccount", accounts[0]?.toLowerCase());
     await getAndUseEthereumContract();
-    // window.location.href = "/home";
+    window.location.href = "/home";
   } catch (error) {
     reportError(error);
   }
@@ -40,12 +40,66 @@ const disconnectWallet = async () => {
   }
 };
 
+// const getAndUseEthereumContract = async () => {
+//   try {
+//     if (!ethereum) return alert("Please install Metamask.");
+//     const contract = await getEthereumContract();
+//     localStorage.setItem("ethereumContract", JSON.stringify(contract));
+//     console.log(localStorage.getItem("ethereumContract"));
+//   } catch (error) {
+//     reportError(error);
+//   }
+// };
+
+// const getEthereumContract = async () => {
+//   try {
+//     if (!ethereum) return alert("Please install Metamask.");
+//     // const [connectedAccount] = useGlobalState("connectedAccount");
+//     // console.log(connectedAccount);
+//     console.log("d");
+//     const provider = new ethers.BrowserProvider(ethereum);
+//     // await ethereum.enable();
+//     console.log("e");
+//     const signer = await provider.getSigner();
+//     console.log("f");
+//     const contract = new ethers.Contract(contractAddress, contractAbi, signer);
+//     console.log("g");
+//     console.log(contract);
+//     return contract;
+//   } catch (error) {
+//     reportError(error);
+//   }
+// };
+
+// const loadProjects = async () => {
+//   try {
+//     if (!ethereum) return alert("Please install Metamask");
+//     console.log("a");
+//     const contract = localStorage.getItem("ethereumContract");
+//     const contractAfterParsed = JSON.parse(contract);
+//     console.log(contractAfterParsed);
+//     console.log(contract);
+//     console.log("b");
+//     const projects = await contractAfterParsed.getProjects();
+//     console.log(projects);
+//     structuredProjects(projects);
+//     console.log("d");
+//   } catch (error) {
+//     reportError(error);
+//   }
+// };
+
 const getAndUseEthereumContract = async () => {
   try {
     if (!ethereum) return alert("Please install Metamask.");
     const contract = await getEthereumContract();
-    localStorage.setItem("ethereumContract", contract);
-    console.log(localStorage.getItem("ethereumContract") + " hhhhh");
+    
+    // Simpan alamat kontrak dan definisi ABI di localStorage
+    localStorage.setItem("contractAddress", contract.address);
+    localStorage.setItem("contractAbi", JSON.stringify(contract.interface.abi));
+
+    console.log(localStorage.getItem("contractAddress")); // Debugging
+    
   } catch (error) {
     reportError(error);
   }
@@ -54,21 +108,52 @@ const getAndUseEthereumContract = async () => {
 const getEthereumContract = async () => {
   try {
     if (!ethereum) return alert("Please install Metamask.");
-    // const [connectedAccount] = useGlobalState("connectedAccount");
-    // console.log(connectedAccount);
+    
     console.log("d");
     const provider = new ethers.BrowserProvider(ethereum);
-    // await ethereum.enable();
     console.log("e");
     const signer = await provider.getSigner();
     console.log("f");
     const contract = new ethers.Contract(contractAddress, contractAbi, signer);
     console.log("g");
+    console.log(contract);
     return contract;
   } catch (error) {
     reportError(error);
   }
 };
+
+const loadProjects = async () => {
+  try {
+    if (!ethereum) return alert("Please install Metamask");
+    console.log("a");
+
+    // Ambil alamat kontrak dan definisi ABI dari localStorage
+    const storedContractAddress = localStorage.getItem("contractAddress");
+    const storedContractAbiString = localStorage.getItem("contractAbi"); // Ambil sebagai string
+
+    // Periksa apakah nilai yang diambil dari localStorage tidak undefined
+    if (!storedContractAddress || !storedContractAbiString) {
+      return console.error("Contract address or ABI is not stored in localStorage.");
+    }
+
+    // Parse definisi ABI hanya jika nilainya tidak undefined
+    const storedContractAbi = JSON.parse(storedContractAbiString);
+
+    console.log("b");
+    const provider = new ethers.providers.BrowserProvider(ethereum);
+    const signer = await provider.getSigner(); // Dapatkan signer di sini
+    const contract = new ethers.Contract(storedContractAddress, storedContractAbi, signer);
+
+    const projects = await contract.getProjects();
+    console.log(projects);
+    structuredProjects(projects);
+    console.log("d");
+  } catch (error) {
+    reportError(error);
+  }
+};
+
 
 const createProject = async ({
   title,
@@ -100,21 +185,6 @@ const createProject = async ({
   }
 };
 
-const loadProjects = async () => {
-  try {
-    if (!ethereum) return alert("Please install Metamask");
-    console.log("a");
-    const contract = localStorage.getItem("ethereumContract");
-    console.log(contract);
-    console.log("b");
-    const projects = await contract.getProjects();
-    console.log(projects);
-    structuredProjects(projects);
-    console.log("d");
-  } catch (error) {
-    reportError(error);
-  }
-};
 
 const structuredProjects = async (projects) => {
   const arrOfProject = projects.map((project) => ({
