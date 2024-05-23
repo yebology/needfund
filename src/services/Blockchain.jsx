@@ -44,7 +44,7 @@ const getAndUseEthereumContract = async () => {
   try {
     if (!ethereum) return alert("Please install Metamask.");
     const contract = await getEthereumContract();
-    localStorage.setItem("ethereumContract", JSON.stringify(contract));
+    localStorage.setItem("ethereumContract", contract);
     console.log(localStorage.getItem("ethereumContract"));
   } catch (error) {
     reportError(error);
@@ -75,12 +75,10 @@ const loadProjects = async () => {
   try {
     if (!ethereum) return alert("Please install Metamask");
     console.log("a");
-    const contract = localStorage.getItem("ethereumContract");
-    const contractAfterParsed = JSON.parse(contract);
-    console.log(contractAfterParsed);
-    console.log(contract);
+    const contract = await getEthereumContract();
+    // const contractAfterParsed = JSON.parse(contract);
     console.log("b");
-    const projects = await contractAfterParsed.getProjects();
+    const projects = await contract.getProjects();
     console.log(projects);
     structuredProjects(projects);
     console.log("d");
@@ -88,7 +86,6 @@ const loadProjects = async () => {
     reportError(error);
   }
 };
-
 
 const createProject = async ({
   title,
@@ -104,7 +101,6 @@ const createProject = async ({
     }
     const contract = await getEthereumContract();
     let costNeeded = Utils.parseEther(cost).toString();
-    console.log(costNeeded);
     await contract.createProject(
       title,
       description,
@@ -112,14 +108,12 @@ const createProject = async ({
       costNeeded,
       expiredAt
     );
-    console.log("bisa");
     window.location.reload();
   } catch (error) {
     console.log("error");
     reportError(error);
   }
 };
-
 
 const structuredProjects = async (projects) => {
   const arrOfProject = projects.map((project) => ({

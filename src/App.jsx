@@ -12,7 +12,6 @@ function App() {
   return (
     <div className="min-h-screen realtive">
       <Routes>
-        {/* <Route path="/" element={<Home />} /> */}
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/projects/:id" element={<Project />} />

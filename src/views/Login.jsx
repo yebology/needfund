@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { connectWallet } from "../services/Blockchain";
 
 const Login = () => {
@@ -81,7 +80,7 @@ const Login = () => {
                         />
                       </svg>
                     </div>
-                    <span className="ml-2 text-white">Connect Your Wallet</span>
+                    <span className="ml-2 text-white">Connect Wallet</span>
                   </button>
                 </div>
               </div>

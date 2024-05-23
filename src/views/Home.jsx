@@ -9,15 +9,13 @@ import { loadProjects } from "../services/Blockchain.jsx";
 const Home = () => {
   const [projects] = useGlobalState("projects");
   const [connectedAccount] = useGlobalState("connectedAccount");
+
   useEffect(() => {
-    console.log("hehe");
-    console.log(connectedAccount);
-    console.log(localStorage.getItem("connectedAccount"));
-    if (localStorage.getItem("connectedAccount") !== null) {
-      console.log("haha");
+    if (connectedAccount !== null) {
       loadProjects();
     }
   }, []);
+  
   return (
     <>
       <Header />

@@ -4,7 +4,7 @@ import { connectWallet, disconnectWallet } from "../services/Blockchain.jsx";
 import { truncate, useGlobalState } from "../backend/index.jsx";
 
 const Header = () => {
-  const connectedAccount = localStorage.getItem("connectedAccount");
+  const [connectedAccount] = localStorage.getItem("connectedAccount");
   return (
     <header className="flex justify-between items-center p-5 bg-white shadow-lg fixed top-0 left-0 right-0">
       <Link
@@ -18,7 +18,6 @@ const Header = () => {
           <button
             type="button"
             className="inline-block px-6 py-2.5 bg-indigo-600 text-white font-medium rounded-full shadow-md hover:bg-indigo-700"
-            // onClick={}
           >
             {" "}
             {truncate(connectedAccount, 4, 4, 11)}
@@ -27,7 +26,7 @@ const Header = () => {
           <button
             type="button"
             className="inline-block px-6 py-2.5 bg-indigo-600 text-white font-medium rounded-full shadow-md hover:bg-indigo-700"
-            // onClick={connectWallet}
+            onClick={connectWallet}
           >
             {" "}
             Connect Wallet{" "}
