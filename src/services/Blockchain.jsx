@@ -14,21 +14,29 @@ const contractAbi = abi.abi;
 
 const connectWallet = async () => {
   try {
+    // Check for Metamask or compatible wallet
     if (!ethereum) {
-      return alert("Please install Metamask");
+      return alert("Please install a compatible Web3 wallet (like Metamask)");
     }
-    await ethereum.enable();
-    const accounts = await ethereum.request({
-      method: "eth_requestAccounts",
-    });
-    setGlobalState("connectedAccount", accounts[0]?.toLowerCase());
-    localStorage.setItem("connectedAccount", accounts[0]?.toLowerCase());
+
+    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+
+    if (!accounts || accounts.length === 0) {
+      return alert("No accounts connected. Please connect a wallet.");
+    }
+
+    const connectedAccount = accounts[0].toLowerCase();
+
+    setGlobalState("connectedAccount", connectedAccount);
+    localStorage.setItem("connectedAccount", connectedAccount);
+
     await getAndUseEthereumContract();
-    window.location.href = "/home";
+
   } catch (error) {
-    reportError(error);
+    reportError(error); 
   }
 };
+
 
 const disconnectWallet = async () => {
   try {

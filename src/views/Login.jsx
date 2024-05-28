@@ -1,6 +1,33 @@
 import { connectWallet } from "../services/Blockchain";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Login = () => {
+
+  const [connectedAccount, setConnectedAccount] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedAccount = localStorage.getItem("connectedAccount");
+    if (storedAccount) {
+      setConnectedAccount(storedAccount);
+    }
+  }, []);
+
+  const handleConnectWallet = async () => {
+    try {
+      await connectWallet();
+      if (connectedAccount) {
+        navigate("/home");
+        setGlobalState("connectedAccount", connectedAccount);
+        localStorage.setItem("connectedAccount", connectedAccount);
+      }
+    }
+    catch (error) {
+        console.log("Failed to connect wallet!");
+    }
+  }
+
   return (
     <div className="flex h-screen w-full">
       <div className="h-screen w-screen bg-gray-100 text-gray-900 flex justify-center">
@@ -20,7 +47,7 @@ const Login = () => {
                 <div className="flex flex-col items-center">
                   <button
                     type="button"
-                    onClick={connectWallet}
+                    onClick={handleConnectWallet}
                     className="w-full max-w-xs font-bold shadow-sm rounded-lg py-3 bg-indigo-500 text-gray-800 flex items-center justify-center transition-all duration-300 ease-in-out focus:outline-none hover:shadow focus:shadow-sm focus:shadow-outline"
                   >
                     <div className="bg-white p-2 rounded-full">
