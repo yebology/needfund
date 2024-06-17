@@ -33,9 +33,8 @@ const CreateProject = () => {
     console.log(parameter);
 
     await createProject(parameter);
-    console.log("b");
+    console.log(title);
     toast.success("Project created successfully!");
-    console.log("a");
     onClose();
   };
 

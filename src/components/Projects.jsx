@@ -8,8 +8,6 @@ const Projects = ({projects}) => {
   return (
     <div className="flex flex-col px-6 mb-7">
       <div className="flex justify-center items-center flex-wrap">
-        {/* {console.log(typeof projects)}
-        {console.log(projects.length)} */}
         {console.log(projects.length)}
         {projects.map((project, index) => (
           <ProjectCard key={index} id={index} project={project} />

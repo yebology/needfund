@@ -7,6 +7,7 @@ const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
     investScale: 'scale-0',
     deleteScale: 'scale-0',
     connectedAccount: '',
+    event: false,
     projects: [],
     stats: null
 })

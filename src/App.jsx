@@ -9,6 +9,14 @@ import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 function App() {
+
+  const [connectedAccount, setConnectedAccount] = useState(null);
+
+  useEffect(() => {
+    const connectedWallet = localStorage.getItem("connectedAccount");
+    setConnectedAccount(connectedWallet)
+  }, []);
+
   return (
     <div className="min-h-screen realtive">
       <Routes>

@@ -2,27 +2,38 @@ import Hero from "../components/Hero.jsx";
 import Projects from "../components/Projects.jsx";
 import Header from "../components/Header.jsx";
 import CreateProject from "../components/CreateProject.jsx";
-import { useGlobalState } from "../backend/index.jsx";
+import { setGlobalState, useGlobalState } from "../backend/index.jsx";
 import React, { useEffect, useState } from "react";
 import { loadProjects } from "../services/Blockchain.jsx";
 
 const Home = () => {
   const [projects] = useGlobalState("projects");
-  const [connectedAccount, setConnectedAccount] = useState(null);
+  const [connectedAccount] = useGlobalState("connectedAccount");
 
   useEffect(() => {
     const storedAccount = localStorage.getItem("connectedAccount");
     if (storedAccount) {
-      setConnectedAccount(storedAccount)
-    }
-  }, []);
-
-  useEffect(() => {
-    if (connectedAccount !== null) {
+      setGlobalState("connectedAccount", storedAccount);
+      // processToShowProject();
       loadProjects();
     }
   }, []);
-  
+
+  // const processToShowProject = async () => {
+  //   try {
+  //     const storedProjects = localStorage.getItem("projects");
+  //     if (storedProjects) {
+  //       setGlobalState("projects", JSON.parse(storedProjects));
+  //     }
+  //     else {
+  //       loadProjects();
+  //     }
+  //   }
+  //   catch (error) {
+  //     console.error("Failed to load projects: ", error);
+  //   }
+  // };
+
   return (
     <>
       <Header connectedAccount={connectedAccount} />
