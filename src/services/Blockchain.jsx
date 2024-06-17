@@ -11,8 +11,9 @@ import { Utils } from "alchemy-sdk";
 const { ethereum } = window;
 const contractAddress = address.address;
 const contractAbi = abi.abi;
-const alchemyAPI = import.meta.env.SEPOLIA_RPC_URL;
-const providerToLoad = new AlchemyProvider("sepolia", "IFkGnzKHWzUGjcgOCKaWIFxSVFRonXyq");
+const network = import.meta.env.VITE_NETWORK;
+const apiKey = import.meta.env.VITE_ALCHEMY_API_KEY;
+const providerToLoad = new AlchemyProvider(network, apiKey);
 
 const connectWallet = async () => {
   try {
