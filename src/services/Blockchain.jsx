@@ -134,17 +134,15 @@ const structuredProjects = async (projects) => {
     projectTitle: project.projectTitle,
     projectDescription: project.projectDescription,
     projectImageURL: project.projectImageURL,
-    cost: parseInt(project.cost._hex) / 10 ** 18, 
-    raised: parseInt(project.raised._hex) / 10 ** 18,
-    totalRaisedSoFar: (parseInt(project.totalRaisedSoFar._hex) / 10 ** 18).toString(),
+    cost: parseInt(project.cost) / 10 ** 18, 
+    raised: parseInt(project.raised) / 10 ** 18,
+    totalRaisedSoFar: parseInt(project.totalRaisedSoFar) / 10 ** 18,
     timestamp: (new Date(parseInt(project.timestamp)).getTime()).toString(),
     expiredAt: (new Date(parseInt(project.expiredAt)).getTime()).toString(),
-    backers: (parseInt(project.backers)).toString(),
+    backers: parseInt(project.backers),
     status: (project.status).toString(),
   }));
   setGlobalState("projects", arrOfProject);
-  console.log(arrOfProject.cost);
-  console.log(arrOfProject.raised);
 };
 
 const reportError = (error) => {

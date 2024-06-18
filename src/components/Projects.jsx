@@ -5,7 +5,7 @@ import { loadProjects } from "../services/Blockchain";
 import { truncate, useGlobalState, remainingDay } from "../backend";
 import { FaEthereum } from "react-icons/fa";
 
-const Projects = ({projects}) => {
+const Projects = ({ projects }) => {
   return (
     <div className="flex flex-col px-6 mb-7">
       <div className="flex justify-center items-center flex-wrap">
@@ -41,28 +41,31 @@ const ProjectCard = ({ project }) => (
             </small>
           </div>
           <small className="text-gray-500 mb-2">
-            {new Date().getTime() > Number(project.expiredAt + '000') ? 'Expired' : remainingDay(project.expiredAt)}{""}
+            {new Date().getTime() > Number(project.expiredAt + "000")
+              ? "Expired"
+              : remainingDay(project.expiredAt)}
+            {""}
           </small>
         </div>
         <div className="w-full bg-gray-300">
           <div
             className="bg-indigo-600 text-xs font-medium text-indigo-100 text-center p-0.5 leading-none rounded-l-full"
-            style={{ width: '${(project.raised / project.cost) * 100}%' }}
+            style={{ width: `${(project.raised / project.cost) * 100}%` }}
           ></div>
         </div>
 
         <div className="flex justify-between items-center font-bold mt-1 mb-2 text-gray-700">
           <small>{project.raised} ETH Raised</small>
           <small className="flex justify-start items-center">
-            <FaEthereum/>
+            <FaEthereum />
             <span>{project.cost} ETH</span>
           </small>
         </div>
 
         <div className="flex justify-between items-center flex-wrap mt-4 mb-2 text-gray-500 font-bold">
-          <small>{project.backers} Backers</small>
+          <small>{project.backers} {(project.backers == 0 || project.backers == 1) ? 'Backer' : 'Backers'} </small>
           <div>
-            <small className="text-indigo-600">Open</small>
+            <small className={new Date().getTime() > Number(project.expiredAt + "000") ? "text-gray-600" : "text-indigo-600"}>{new Date().getTime() > Number(project.expiredAt + "000") ? "Closed" : "Open"}</small>
           </div>
         </div>
       </div>
