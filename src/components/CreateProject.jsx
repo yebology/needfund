@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { useGlobalState, setGlobalState } from "../backend/index.jsx";
 import { createProject } from "../services/Blockchain.jsx";
-import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreateProject = () => {
   const [createScale] = useGlobalState("createScale");
@@ -34,7 +34,8 @@ const CreateProject = () => {
 
     await createProject(parameter);
     console.log(title);
-    toast.success("Project created successfully!");
+    localStorage.setItem("createNewProject", true);
+    console.log("hehe")
     onClose();
   };
 

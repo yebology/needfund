@@ -5,6 +5,12 @@
   text-align: center;
 }
 
+.toast-position {
+  bottom: 0;
+  right: 0;
+  padding: 10px;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

@@ -7,7 +7,6 @@ const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
     investScale: 'scale-0',
     deleteScale: 'scale-0',
     connectedAccount: '',
-    event: false,
     projects: [],
     stats: null
 })
@@ -30,7 +29,7 @@ const remainingDay = (days) => {
     days = moment(days).format('YYYY-MM-DD')
     days = moment(days)
     days = days.diff(today, 'days')
-    return days == 1 ? '1 day' : days + ' days'
+    return days == 1 ? '1 day left' : days + ' days left'
 }
 
 export {

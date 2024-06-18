@@ -5,6 +5,9 @@ import CreateProject from "../components/CreateProject.jsx";
 import { setGlobalState, useGlobalState } from "../backend/index.jsx";
 import React, { useEffect, useState } from "react";
 import { loadProjects } from "../services/Blockchain.jsx";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "../App.css";
 
 const Home = () => {
   const [projects] = useGlobalState("projects");
@@ -12,27 +15,21 @@ const Home = () => {
 
   useEffect(() => {
     const storedAccount = localStorage.getItem("connectedAccount");
+    const recentlyCreateProject = localStorage.getItem("createNewProject");
     if (storedAccount) {
       setGlobalState("connectedAccount", storedAccount);
-      // processToShowProject();
       loadProjects();
     }
+    console.log(recentlyCreateProject);
+    if (recentlyCreateProject == true) {
+      toast.success("Project created successfully!", {
+        className: "toast-position",
+        autoClose: 5000,
+      });
+      localStorage.setItem("createNewProject", false);
+      console.log(recentlyCreateProject + "sad");
+    }
   }, []);
-
-  // const processToShowProject = async () => {
-  //   try {
-  //     const storedProjects = localStorage.getItem("projects");
-  //     if (storedProjects) {
-  //       setGlobalState("projects", JSON.parse(storedProjects));
-  //     }
-  //     else {
-  //       loadProjects();
-  //     }
-  //   }
-  //   catch (error) {
-  //     console.error("Failed to load projects: ", error);
-  //   }
-  // };
 
   return (
     <>

@@ -65,15 +65,9 @@ const getAndUseEthereumContract = async () => {
 const getEthereumContract = async () => {
   try {
     if (!ethereum) return alert("Please install Metamask.");
-    console.log("kiw")
     const provider = new ethers.BrowserProvider(ethereum);
-    console.log("kiww")
     const signer = await provider.getSigner();
-    console.log(signer);
-    console.log("kiwww")
     const contract = new ethers.Contract(contractAddress, contractAbi, signer);
-    console.log(contract);
-    console.log("hehe");
     return contract;
   } catch (error) {
     reportError(error);
@@ -83,9 +77,7 @@ const getEthereumContract = async () => {
 const loadProjects = async () => {
   try {
     if (!ethereum) return alert("Please install Metamask");
-    console.log("hehe");
     const contract = await getLoadContract();
-    console.log("hoho");
     const projects = await contract.getProjects();
     structuredProjects(projects);
   } catch (error) {
@@ -120,7 +112,6 @@ const createProject = async ({
     }
     const contract = await getEthereumContract();
     let costNeeded = Utils.parseEther(cost).toString();
-    console.log("hehehe");
     await contract.createProject(
       title,
       description,
@@ -128,7 +119,6 @@ const createProject = async ({
       costNeeded,
       expiredAt
     );
-    console.log("aman");
     window.location.reload();
   } catch (error) {
     console.log("error");
@@ -144,9 +134,8 @@ const structuredProjects = async (projects) => {
     projectTitle: project.projectTitle,
     projectDescription: project.projectDescription,
     projectImageURL: project.projectImageURL,
-    // ubah ke string
-    cost: (parseInt(project.cost._hex) / 10 ** 18).toString(), 
-    raised: (parseInt(project.raised._hex) / 10 ** 18).toString(),
+    cost: parseInt(project.cost._hex) / 10 ** 18, 
+    raised: parseInt(project.raised._hex) / 10 ** 18,
     totalRaisedSoFar: (parseInt(project.totalRaisedSoFar._hex) / 10 ** 18).toString(),
     timestamp: (new Date(parseInt(project.timestamp)).getTime()).toString(),
     expiredAt: (new Date(parseInt(project.expiredAt)).getTime()).toString(),
@@ -154,7 +143,8 @@ const structuredProjects = async (projects) => {
     status: (project.status).toString(),
   }));
   setGlobalState("projects", arrOfProject);
-  localStorage.setItem("projects", JSON.stringify(arrOfProject));
+  console.log(arrOfProject.cost);
+  console.log(arrOfProject.raised);
 };
 
 const reportError = (error) => {

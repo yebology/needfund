@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Identicons from "react-identicons";
 import { loadProjects } from "../services/Blockchain";
-import { truncate, useGlobalState } from "../backend";
+import { truncate, useGlobalState, remainingDay } from "../backend";
+import { FaEthereum } from "react-icons/fa";
 
 const Projects = ({projects}) => {
   return (
@@ -39,14 +40,25 @@ const ProjectCard = ({ project }) => (
               {truncate(project.owner, 4, 4, 11)}
             </small>
           </div>
-          <small className="text-gray-500 mb-2">2 days left</small>
+          <small className="text-gray-500 mb-2">
+            {new Date().getTime() > Number(project.expiredAt + '000') ? 'Expired' : remainingDay(project.expiredAt)}{""}
+          </small>
         </div>
         <div className="w-full bg-gray-300">
           <div
             className="bg-indigo-600 text-xs font-medium text-indigo-100 text-center p-0.5 leading-none rounded-l-full"
-            style={{ width: "50%" }}
+            style={{ width: '${(project.raised / project.cost) * 100}%' }}
           ></div>
         </div>
+
+        <div className="flex justify-between items-center font-bold mt-1 mb-2 text-gray-700">
+          <small>{project.raised} ETH Raised</small>
+          <small className="flex justify-start items-center">
+            <FaEthereum/>
+            <span>{project.cost} ETH</span>
+          </small>
+        </div>
+
         <div className="flex justify-between items-center flex-wrap mt-4 mb-2 text-gray-500 font-bold">
           <small>{project.backers} Backers</small>
           <div>
